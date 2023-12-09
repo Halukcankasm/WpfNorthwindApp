@@ -1,0 +1,87 @@
+﻿<Page x:Class="WpfNorthwindApp.View.Orders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfNorthwindApp.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Orders"
+      x:Name="Codebehind"
+      DataContext="{Binding ElementName=Codebehind}">
+    <Page.Resources>
+        <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}" >
+            <Style.Setters>
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Background" Value="Gray" />
+                <Setter Property="GridLinesVisibility" Value="None" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+                <Setter Property="HeadersVisibility" Value="None" />
+                <Setter Property="AutoGenerateColumns" Value="False" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="HeadersVisibility" Value="Column" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+                <Setter Property="IsReadOnly" Value="True" />
+                <Setter Property="ColumnWidth" Value="*" />
+                <!--<Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGrid" >
+                            <Border VerticalAlignment="Center"  CornerRadius="10" BorderThickness="0.8" BorderBrush="DarkGray">
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>-->
+            </Style.Setters>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Border CornerRadius="15" BorderThickness="0" BorderBrush="Black" Margin="20" Background="Transparent" >
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect/>
+            </Border.BitmapEffect>
+            <Grid>
+                <Border x:Name="BDRounded" BorderThickness="0" CornerRadius="15" Background="White" />
+                <DataGrid  Style="{ StaticResource DataGridStyle }"  ItemsSource="{Binding ElementName=Codebehind, Path=OrdersList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    
+                    <DataGrid.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=BDRounded}"/>
+                    </DataGrid.OpacityMask>
+
+                    <DataGrid.Columns>
+                        
+                        <DataGridTextColumn Header="OrderNumber" Binding="{Binding Path=OrderID}"/>
+                        <DataGridTextColumn Header="OrderDate" Binding="{Binding Path=OrderDate, StringFormat='{}{0:d/MM/yyyy}'}"/>
+                        <DataGridTextColumn Header="RequiredDate" Binding="{Binding Path=RequiredDate, StringFormat='{}{0:d/MM/yyyy}'}"/>
+                        <DataGridTextColumn Header="ShippedDate" Binding="{Binding Path=ShippedDate, StringFormat='{}{0:d/MM/yyyy}'}"/>
+                        <DataGridTextColumn Header="ShipName" Binding="{Binding Path=ShipName}"/>
+                        <DataGridTextColumn Header="ShipAddress" Binding="{Binding Path=ShipAddress}"/>
+                        <DataGridTextColumn Header="ShipCity" Binding="{Binding Path=ShipCity}"/>
+                        <DataGridTextColumn Header="ShipCountry" Binding="{Binding Path=ShipCountry}"/>
+                        <DataGridTextColumn Header="EmployeName" Binding="{Binding Path=EmployeName}"/>
+                        <DataGridTextColumn Header="CompanyName" Binding="{Binding Path=CompanyName}"/>
+                        <DataGridTextColumn Header="ContactName" Binding="{Binding Path=ContactName}"/>
+                    </DataGrid.Columns>
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="0,15,0,15" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                        <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGrid.CellStyle>
+                </DataGrid>
+            </Grid>
+            
+        </Border>
+
+
+    </Grid>
+</Page>

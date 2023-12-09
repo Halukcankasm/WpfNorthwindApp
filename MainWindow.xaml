@@ -1,0 +1,96 @@
+﻿<Window x:Class="WpfNorthwindApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNorthwindApp"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        WindowState="Normal"
+        WindowStyle="SingleBorderWindow">
+
+    <Window.Resources>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Style.Setters>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True" >
+                    <Setter Property="Background" Value="WhiteSmoke" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+            
+        </Style>
+
+        <Style x:Key="MenuStackPanel" TargetType="StackPanel">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="MenuImage" TargetType="Image">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}"
+                    Value="True">
+                    <Setter Property="Width" Value="60" />
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}"
+                    Value="True">
+                    <Setter Property="Width" Value="55" />
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0"  HorizontalAlignment="Stretch"  >
+                <Button x:Name="EmployeBtn" Style="{StaticResource MenuButton}" Height="80" Width="80" BorderThickness="0" Click="EmployeBtn_Click">
+                    <StackPanel Orientation="Vertical"  Style="{StaticResource MenuStackPanel}">
+                        <Image x:Name="EmployeBtnImage" Style="{StaticResource MenuImage}" Source="/Source/Employee.jpg" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom"  Height="20" FontWeight="Bold" FontFamily="Arial" >Employee</TextBlock>
+                    </StackPanel>                    
+                </Button>
+                <Button x:Name="ProductBtn" Style="{StaticResource MenuButton}" Height="80" Width="80" BorderThickness="0" Click="ProductBtn_Click">
+                    <StackPanel Orientation="Vertical" Height="80" Width="80" Style="{StaticResource MenuStackPanel}">
+                        <Image x:Name="ProductBtnImage" Style="{StaticResource MenuImage}" Source="/Source/productIvon.png" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom"  Height="20" FontWeight="Bold" FontFamily="Arial" >Product</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="OrdersBtn" Style="{StaticResource MenuButton}" Height="80" Width="80" BorderThickness="0" Click="OrdersBtn_Click">
+                    <StackPanel Orientation="Vertical" Height="80" Width="80" Style="{StaticResource MenuStackPanel}">
+                        <Image x:Name="OrdersBtnImage" Style="{StaticResource MenuImage}" Source="/Source/orders.png"  VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom"  Height="20" FontWeight="Bold" FontFamily="Arial" >Orders</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" ></Frame>
+        </Grid>
+    </Grid>
+</Window>

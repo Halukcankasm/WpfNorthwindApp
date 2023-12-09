@@ -1,0 +1,217 @@
+﻿<Window x:Class="WpfNorthwindApp.View.AddEmployePopUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfNorthwindApp.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        WindowState="Normal"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Title="AddEmployePopUp" Height="450" Width="800"
+        x:Name="CodeBehind"
+        DataContext="{Binding ElementName=CodeBehind}">
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <EventSetter Event="MouseEnter" Handler="TextBox_MouseEnter" />
+            <Style.Triggers>
+                <DataTrigger Binding="{ Binding AddEmploye.IsEmptyTxt}" Value="True" >
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{ Binding AddEmploye.IsEmptyTxt}" Value="False" >
+                    <Setter Property="Background" Value="White" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Button" x:Key="EditButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" BorderBrush="Black" BorderThickness="0.2" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Content="{TemplateBinding Content}" >
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>          
+                <Trigger Property="IsMouseOver" Value="True" >
+                    <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="RenderTransformOrigin" Value="0,0"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>                
+            </Style.Triggers>
+        </Style>
+        
+        
+    </Window.Resources>
+    <Border CornerRadius="20" Background="Azure">
+        <Grid>
+            <Button Height="50" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ExitButton_Click" Margin="10">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Border CornerRadius="100">
+                                        <Border.Background>
+                                            <ImageBrush  ImageSource="/Source/exit50x50.png"/>
+                                        </Border.Background>
+
+                                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True" >
+                                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="RenderTransformOrigin" Value="0,0"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+            </Button>
+            <StackPanel Margin="0,70,0,0" Orientation="Vertical" Background="Transparent">
+                <Image Width="100" Height="100" Source="/Source/Employee.jpg" />
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="80,5,5,5" Orientation="Vertical" Width="Auto" Grid.Column="0" Grid.Row="0"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Label Content="FirstName" />
+                        <TextBox x:Name="FirstNameTxt"  Width="250" Text="{Binding Employee.FirstName, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,80,5" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0"  VerticalAlignment="Top"> 
+                        <Label Content="LastName" />
+                        <TextBox x:Name="LastNameTxt" Width="250" Text="{Binding Employee.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Style="{StaticResource TextBoxStyle}"/>
+                    </StackPanel>
+                    <StackPanel Margin="80,5,5,5"  Grid.Row="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+                        <Label Content="Tittle" />
+                        <TextBox  x:Name="TittleTxt" Text="{Binding Employee.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left"  Width="250"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,80,5"   HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2">
+                        <Label Content="BirthDate" />
+                        <DatePicker  Name="BirtDatePicker"  SelectedDate="{Binding Employee.BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Width="250" HorizontalAlignment="Left" />
+                    </StackPanel>
+                    <StackPanel Margin="80,5,5,5"  Grid.Row="2"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="0">
+                        <Label Content="Address" />
+                        <TextBox x:Name="AddressTxt"  HorizontalAlignment="Left" Width="250" Text="{Binding Employee.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,80,5"  Grid.Row="2"  VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
+                        <Label Content="Phone" />
+                        <TextBox x:Name="PhoneTxt" Text="{Binding Employee.HomePhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Width="250"/>
+                    </StackPanel>
+                </Grid>
+
+                <Button Width="auto" Height="auto"  Visibility="{Binding AddButtonVisibility}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="AddButton_Click">
+                    <StackPanel Orientation="Horizontal" Background="Transparent" >
+                        <Image Width="30" Height="30"  Source="/Source/addEmployeeeIcon.png" />
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" >Add Item</Label>
+                    </StackPanel>
+                    <Button.Style>
+                        <Style TargetType="Button" >
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button" >
+                                        <Border CornerRadius="10" BorderBrush="Black" BorderThickness="0.2" Background="{TemplateBinding Background}" >
+                                            <!--<Border.Background>
+                                                <ImageBrush  ImageSource="/Source/addEmployeeeIcon.png" />
+                                            </Border.Background>-->
+                                            <ContentPresenter VerticalAlignment="Center"  HorizontalAlignment="Center" Content="{TemplateBinding Content }">                                                  
+                                            </ContentPresenter>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True" >
+                                    <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                                    <Setter Property="Background" Value="Gray" />
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1.2" ScaleY="1.2"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+
+                                <Trigger Property="IsMouseOver" Value="False" >
+                                    <Setter Property="Background" Value="Transparent" />
+                                </Trigger>
+
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="RenderTransformOrigin" Value="0,0"/>
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding EditsButtonVisibility}">
+                    <Button Height="auto" Width="auto" Background="Transparent" HorizontalAlignment="left" Click="SaveEmpButton_Click" Margin="0,0,80,0" VerticalAlignment="Center" Style="{StaticResource EditButton}">
+                        <Button.Content>
+                            <StackPanel Background="Transparent" Width="auto" Orientation="Horizontal" >
+                                <Image Width="30" Height="30"  Source="/Source/saveIcon.png" />
+                                <Label Content="Save" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+
+                    <Button Height="auto" Width="auto" Background="Transparent" HorizontalAlignment="Right" Click="DeleteButton_Click" Margin="80,0,0,0" VerticalAlignment="Center" Style="{StaticResource EditButton}">
+                        <Button.Content>
+                            <StackPanel Background="Transparent" Width="auto" Orientation="Horizontal" >
+                                <Image Width="30" Height="30"  Source="/Source/deleteIcon.png" />
+                                <Label Content="Delete" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+
+
+
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>
